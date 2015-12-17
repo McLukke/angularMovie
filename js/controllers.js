@@ -8,10 +8,15 @@ movieApp.controller('movieCtrl', function($scope, $http) {
 	var configuration = '/configuration';
 
 	$http.get(baseURL + configuration + apiKey).success(function(data) {
-		console.log(data);
-		$scope.imageBaseURL = data.images.base_url;
-		$scope.imageBaseURL = $scope.imageBaseURL.slice(0,-1);
-		console.log($scope.imageBaseURL);
+		// console.log(data);
+		$scope.imageSizeSmall = data.images.poster_sizes[2] + '/';
+		$scope.imageSizeLarge = data.images.poster_sizes[6] + '/';
+		$scope.imageBaseURL = data.images.secure_base_url;
+		// $scope.imageBaseURL = $scope.imageBaseURL.slice(0,-1);
+		
+		// console.log($scope.imageSizeSmall);
+		// console.log($scope.imageSizeLarge);
+		// console.log($scope.imageBaseURL);
 	});
 
 	$http({
@@ -21,13 +26,16 @@ movieApp.controller('movieCtrl', function($scope, $http) {
 	}).success(function(data) {
 		// console.log(data);
 		$scope.latestMovies = data.results;
+		// console.log($scope.latestMovies);
 
-		console.log($scope.latestMovies);
 	}).error(function(data, status) {
-		console.log(data);
-		console.log(status);
+		// console.log(data);
+		// console.log(status);
 	});
 
+	$scope.searchMovie = function() {
+		console.log('hello');
+	};
 
 });
 
