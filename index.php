@@ -1,7 +1,6 @@
 <html>
 <?php include('partials/head.html'); ?>
 <body ng-app="movieApp">
-<div ng-controller="movieCtrl">
-</div>
+<div ng-view></div>
 </body>
 </html>

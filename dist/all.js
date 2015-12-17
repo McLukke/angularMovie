@@ -1,25 +1,37 @@
 var movieControllers = angular.module('movieControllers', []);
 
-movieControllers.controller('movieCtrl', ['$scope', '$http', function($scope, $http) {
+movieApp.controller('movieCtrl', function($scope, $http) {
 
 	var apiKey = '?api_key=df7ff8bb5e24f229bb2f9f2e59571656';
-	var baseURL = 'https://api.themoviedb.org/3/';
-	var upcomingURL = 'movie/upcoming';
+	var baseURL = 'https://api.themoviedb.org/3';
+	var upcomingURL = '/movie/upcoming';
+	var configuration = '/configuration';
 
-	console.log(baseURL + upcomingURL + apiKey);
+	$http.get(baseURL + configuration + apiKey).success(function(data) {
+		console.log(data);
+		$scope.imageBaseURL = data.images.base_url;
+		$scope.imageBaseURL = $scope.imageBaseURL.slice(0,-1);
+		console.log($scope.imageBaseURL);
+	});
 
 	$http({
 		method: 'GET',
-		url: baseURL + upcomingURL + apiKey
+		url: baseURL + upcomingURL + apiKey,
+		cache: true
 	}).success(function(data) {
-		console.log(data);
+		// console.log(data);
+		$scope.latestMovies = data.results;
+
+		console.log($scope.latestMovies);
 	}).error(function(data, status) {
 		console.log(data);
 		console.log(status);
 	});
-}]);
 
-movieControllers.controller('resultsCtrl', ['$scope', '$http', function($scope, $http) {
+
+});
+
+movieApp.controller('resultsCtrl', ['$scope', '$http', function($scope, $http) {
 
 }]);
 
@@ -32,11 +44,11 @@ var movieApp = angular.module('movieApp', [
 movieApp.config(function($routeProvider) {
 	$routeProvider.
 	when('/', {
-		templateURL: 'partials/landing.php',
+		templateUrl: 'partials/landing.php',
 		controller: 'movieCtrl'
 	}).
 	when('/:searchResult', {
-		templateURL: 'partials/searchResults.php',
+		templateUrl: 'partials/searchResults.php',
 		controller: 'resultsCtrl'
 	}).
 	otherwise({
