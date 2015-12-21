@@ -1,7 +1,7 @@
 <h1>This is my own Movie Database</h1>
 
 <form ng-submit="searchMovie()">
-	<input ng-model="searchMovie" />
+	<input ng-model="searchParam" />
 	<input type="submit" value="search" />
 </form>
 
